@@ -44,6 +44,8 @@ namespace MultiSelectPackage.Components
 
 		#endregion
 
+		#region Methods
+
 		protected override async Task OnParametersSetAsync()
 		{
 			if (Items != null && Items.Any())
@@ -187,5 +189,7 @@ namespace MultiSelectPackage.Components
 				return $"{(string.IsNullOrWhiteSpace(CustomStyle) ? string.Empty : CustomStyle)};";
 			}
 		}
+
+		#endregion
 	}
 }

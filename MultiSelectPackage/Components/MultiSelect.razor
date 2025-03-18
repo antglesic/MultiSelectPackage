@@ -10,7 +10,7 @@
 	}
 
 	<!-- Dropdown with Multiple Selections -->
-	<div class="dropdown-list">
+	<div class="dropdown-list" @onclick:stopPropagation="true">
 		@if (FilteredItemList != null && FilteredItemList.Any())
 		{
 			@foreach (var item in FilteredItemList)
