@@ -1,0 +1,27 @@
+﻿@page "/counter"
+@rendermode InteractiveServer
+
+<PageTitle>Counter</PageTitle>
+
+<h1>Counter</h1>
+
+<p role="status">Current count: @currentCount</p>
+
+<button class="btn btn-primary" @onclick="IncrementCount">Click me</button>
+
+<br />
+<br />
+
+<MultiSelect T="DummyDataDto"
+			 Items="DummyData"
+			 DisplayProperty="FullName"
+			 IdentifierProperty="Id"
+			 ValuesChanged="OnSelectedItemsChanged"
+			 CanSearch="true"
+			 SearchPlaceHolder="Traži..." />
+
+<h1>Selected Items</h1>
+@foreach (var item in selectedItems)
+{
+	<p>@item.FullName</p>
+}
