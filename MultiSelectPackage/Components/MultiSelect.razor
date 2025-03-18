@@ -1,7 +1,8 @@
 ﻿@using MultiSelectPackage.Components
 @typeparam T
 
-<div class="dropdown-container @(isDropdownOpen ? "open" : "")" @onclick="ToggleDropdown">
+<div class="dropdown-container @(isDropdownOpen ? "open" : "")" @onclick="ToggleDropdown"
+	 style="@(GetHeight() + GetWidth() + GetCustomStyle())">
 	@if (CanSearch)
 	{
 		<!-- Search Box -->

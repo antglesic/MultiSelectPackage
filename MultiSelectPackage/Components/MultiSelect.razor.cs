@@ -24,6 +24,15 @@ namespace MultiSelectPackage.Components
 		[Parameter]
 		public string SearchPlaceHolder { get; set; } = "Search...";
 
+		[Parameter]
+		public string Height { get; set; } = string.Empty;
+
+		[Parameter]
+		public string Width { get; set; } = "200px";
+
+		[Parameter]
+		public string CustomStyle { get; set; } = string.Empty;
+
 		#endregion
 
 		#region Properties
@@ -148,6 +157,35 @@ namespace MultiSelectPackage.Components
 		{
 			isDropdownOpen = !isDropdownOpen;
 			StateHasChanged(); // Force re-render
+		}
+
+		private string GetHeight()
+		{
+			if (string.IsNullOrWhiteSpace(Height))
+			{
+				return string.Empty;
+			}
+			else
+			{
+				return $"height: {(string.IsNullOrWhiteSpace(Height) ? string.Empty : Height)};";
+			}
+		}
+
+		private string GetWidth()
+		{
+			return $"width: {Width};";
+		}
+
+		private string GetCustomStyle()
+		{
+			if (string.IsNullOrWhiteSpace(CustomStyle))
+			{
+				return string.Empty;
+			}
+			else
+			{
+				return $"{(string.IsNullOrWhiteSpace(CustomStyle) ? string.Empty : CustomStyle)};";
+			}
 		}
 	}
 }
