@@ -76,6 +76,9 @@
 .dropdown-item {
 	padding: 8px;
 	cursor: pointer;
+	display: flex;
+	align-items: center;
+	gap: 8px; /* Adds space between checkbox and text */
 }
 
 	.dropdown-item:hover {
@@ -99,6 +102,7 @@
 /* Checkbox and label */
 .dropdown-checkbox {
 	margin-right: 8px;
+	flex-shrink: 0; /* Prevents checkbox from shrinking */
 }
 
 .dropdown-label {
