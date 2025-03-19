@@ -190,6 +190,25 @@ namespace MultiSelectPackage.Components
 			}
 		}
 
+		private async Task<bool> RemoveItem(object Identifier)
+		{
+			bool retval = false;
+
+			if (SelectedValues != null && SelectedValues.Any())
+			{
+				var itemToRemove = SelectedValues.FirstOrDefault(item => GetPropertyValue((T)item, IdentifierProperty).Equals(Identifier));
+				if (itemToRemove != null)
+				{
+					SelectedValues.Remove(itemToRemove);
+					retval = true;
+					await ValuesChanged.InvokeAsync(SelectedValues.Cast<T>().ToList());
+					await InvokeAsync(StateHasChanged);
+				}
+			}
+
+			return retval;
+		}
+
 		#endregion
 	}
 }
