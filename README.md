@@ -14,23 +14,16 @@ A lightweight, customizable Multiselect component built with Blazor. Easily sele
 
 
 🚀 Getting Started
-Installation
+## Installation
+1. Add the following to your `_Imports.razor` file:
+    ```csharp
+    @using MultiSelectPackage
+    ```
+## Usage
+See the project `MultiSelectPackage` for more examples of how to use the component
 
-dotnet add package YourComponentNamespace --version x.x.x
-
-    Or add the project as a reference if you're including it directly.
-
-Usage
-
+### MultiSelect dropdown
 <MultiSelect TValue="string"
              Items="@myItems"
              SelectedItems="@selectedItems"
              Placeholder="Select options..." />
-
-Parameters
-Parameter	Type	Description
-Items	IEnumerable<T>	The list of items to select from
-SelectedItems	List<T>	The currently selected items
-Placeholder	string	Placeholder text for the dropdown
-ItemTemplate	RenderFragment<T>	Optional template for rendering items
-Disabled	bool	Disable the component
