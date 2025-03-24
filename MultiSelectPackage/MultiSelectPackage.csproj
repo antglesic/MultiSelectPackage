@@ -19,6 +19,7 @@
 		<RepositoryUrl>https://github.com/antglesic/MultiSelectPackage</RepositoryUrl>
 		<RepositoryType>git</RepositoryType>
 		<PackageTags>Blazor, multiselect, dropdown, combobox</PackageTags>
+		<OutputType>Library</OutputType>
 	</PropertyGroup>
 
 	<ItemGroup>
