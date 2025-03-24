@@ -3,6 +3,7 @@
 
 @if (SelectedValues != null && SelectedValues.Any())
 {
+
 	<!-- Dropdown value container that has the Selected Values displayed -->
 	<div class="dropdown-value-container" style="@(GetHeight() + GetWidth())">
 		@foreach (var item in SelectedValues.Cast<T>().ToList())
