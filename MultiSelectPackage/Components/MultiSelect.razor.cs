@@ -48,18 +48,21 @@ namespace MultiSelectPackage.Components
 
 		protected override async Task OnParametersSetAsync()
 		{
+			// Check if Items is not null and has records
 			if (Items != null && Items.Any())
 			{
-				if (!ItemList.Any() || !ItemsAreEqual(ItemList, Items))
+				// Check if ItemList is empty or if the items have changed
+				if (ItemList.Count == 0 || !ItemsAreEqual(ItemList, Items))
 				{
-					ItemList = Items.ToList();
-					FilteredItemList = ItemList;  // Initialize the filtered list with all items
+					ItemList = Items.ToList();      // Initialize ItemList with the provided items
+					FilteredItemList = ItemList;    // Initialize the filtered list with all items
 				}
 			}
 
 			await base.OnParametersSetAsync();
 		}
 
+		// This method checks if the items in the list are equal based on the IdentifierProperty
 		private bool ItemsAreEqual(IEnumerable<T> list1, IEnumerable<T> list2)
 		{
 			var identifierProperty = typeof(T).GetProperty(IdentifierProperty);
@@ -74,7 +77,8 @@ namespace MultiSelectPackage.Components
 			return list1Identifiers.SequenceEqual(list2Identifiers);
 		}
 
-		private object GetPropertyValue(T item, string propertyName)
+		// This method retrieves the value of a property from an item using reflection
+		private object? GetPropertyValue(T item, string propertyName)
 		{
 			var propertyInfo = typeof(T).GetProperty(propertyName);
 			if (propertyInfo == null)
@@ -96,10 +100,10 @@ namespace MultiSelectPackage.Components
 			{
 				// Filter items based on DisplayProperty (search text matching any part of the display property)
 				FilteredItemList = ItemList.Where(item =>
-				GetPropertyValue(item, DisplayProperty)
-					.ToString()
-					.Contains(filterText, StringComparison.CurrentCultureIgnoreCase))
-					.ToList();
+				{
+					var displayValue = GetPropertyValue(item, DisplayProperty)?.ToString();
+					return displayValue != null && displayValue.Contains(filterText, StringComparison.CurrentCultureIgnoreCase);
+				}).ToList();
 			}
 
 			await InvokeAsync(StateHasChanged);
@@ -116,7 +120,7 @@ namespace MultiSelectPackage.Components
 				isSelected = SelectedValues.Any(selectedItem =>
 				{
 					var selectedIdentifierValue = GetPropertyValue((T)selectedItem, IdentifierProperty);
-					return selectedIdentifierValue.Equals(identifierValue);
+					return selectedIdentifierValue != null && selectedIdentifierValue.Equals(identifierValue);
 				});
 			}
 
@@ -151,6 +155,7 @@ namespace MultiSelectPackage.Components
 			catch (Exception ex)
 			{
 				Console.WriteLine(ex.Message);
+				throw new InvalidOperationException($"Error in OnValueChanged: {ex.Message}", ex);
 			}
 		}
 
@@ -161,6 +166,7 @@ namespace MultiSelectPackage.Components
 			StateHasChanged(); // Force re-render
 		}
 
+		// Gets the CSS styling for the Height property
 		private string GetHeight()
 		{
 			if (string.IsNullOrWhiteSpace(Height))
@@ -173,11 +179,13 @@ namespace MultiSelectPackage.Components
 			}
 		}
 
+		// Gets the CSS styling for the Width property
 		private string GetWidth()
 		{
 			return $"width: {Width};";
 		}
 
+		// Gets the custom CSS styling if provided through the CustomStyle parameter
 		private string GetCustomStyle()
 		{
 			if (string.IsNullOrWhiteSpace(CustomStyle))
@@ -190,6 +198,7 @@ namespace MultiSelectPackage.Components
 			}
 		}
 
+		// This method will remove an item from the selected values if it was selected prior
 		private async Task<bool> RemoveItem(object Identifier)
 		{
 			bool retval = false;
