@@ -23,6 +23,7 @@ A lightweight, customizable Multiselect component built with Blazor. Easily sele
 See the project `MultiSelectPackage` for more examples of how to use the component
 
 ### MultiSelect dropdown
+```csharp
 <MultiSelect T="DummyDataDto"
 	Items="DummyData"
 	DisplayProperty="FullName"
@@ -32,6 +33,7 @@ See the project `MultiSelectPackage` for more examples of how to use the compone
 	SearchPlaceHolder="Search..."
 	CustomStyle=""
 	Width="35%" />
+```
 
 #### When your Item looks like this:
 ```csharp
