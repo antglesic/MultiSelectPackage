@@ -132,10 +132,19 @@ namespace MultiSelectPackage.Components
 		{
 			try
 			{
+				if (item == null)
+				{
+					throw new ArgumentNullException(nameof(item));
+				}
+
 				if (IsSelected(item))
 				{
 					// If the item is already selected, remove it
-					SelectedValues.Remove(item);
+					var selectedItem = SelectedValues.FirstOrDefault(selected => GetPropertyValue((T)selected, IdentifierProperty)?.Equals(GetPropertyValue(item, IdentifierProperty)) == true);
+					if (selectedItem != null)
+					{
+						SelectedValues.Remove(selectedItem);
+					}
 				}
 				else
 				{
@@ -205,7 +214,12 @@ namespace MultiSelectPackage.Components
 
 			if (SelectedValues != null && SelectedValues.Any())
 			{
-				var itemToRemove = SelectedValues.FirstOrDefault(item => GetPropertyValue((T)item, IdentifierProperty).Equals(Identifier));
+				var itemToRemove = SelectedValues.FirstOrDefault(item =>
+				{
+					var propertyValue = GetPropertyValue((T)item, IdentifierProperty);
+					return propertyValue != null && propertyValue.Equals(Identifier);
+				});
+
 				if (itemToRemove != null)
 				{
 					SelectedValues.Remove(itemToRemove);
