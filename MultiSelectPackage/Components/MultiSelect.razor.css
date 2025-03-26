@@ -94,6 +94,7 @@
 	visibility: hidden;
 	transform: translateY(-10px);
 	transition: none; /* Disable default transition */
+	z-index: 1000;
 }
 
 /* Show the dropdown list when it's active */
