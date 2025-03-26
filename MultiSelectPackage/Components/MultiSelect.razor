@@ -38,12 +38,12 @@
 			{
 				<div class="dropdown-item">
 					<input type="checkbox"
-						   id="@GetPropertyValue(item, IdentifierProperty)"
+						   id="@($"{ComponentId}_{GetPropertyValue(item, IdentifierProperty)}")"
 						   value="@GetPropertyValue(item, IdentifierProperty)"
 						   checked="@IsSelected(item)"
 						   @onchange="() => OnValueChanged(item)"
 						   class="dropdown-checkbox" />
-					<label for="@GetPropertyValue(item, IdentifierProperty)" class="dropdown-label">
+					<label for="@($"{ComponentId}_{GetPropertyValue(item, IdentifierProperty)}")" class="dropdown-label">
 						@GetPropertyValue(item, DisplayProperty)
 					</label>
 				</div>
