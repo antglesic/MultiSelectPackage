@@ -33,6 +33,9 @@ namespace MultiSelectPackage.Components
 		[Parameter]
 		public string CustomStyle { get; set; } = string.Empty;
 
+		[Parameter]
+		public string ComponentId { get; set; } = Guid.NewGuid().ToString("N");
+
 		#endregion
 
 		#region Properties
