@@ -10,6 +10,9 @@ namespace MultiSelectPackage.Components
 		public required IEnumerable<T> Items { get; set; }
 
 		[Parameter]
+		public IEnumerable<T>? SelectedItems { get; set; }
+
+		[Parameter]
 		public required string IdentifierProperty { get; set; }
 
 		[Parameter]
@@ -42,7 +45,7 @@ namespace MultiSelectPackage.Components
 
 		private List<T> ItemList = new List<T>();
 		private List<T> FilteredItemList = new List<T>();
-		private List<object> SelectedValues = new List<object>();
+		private List<T> SelectedValues = new List<T>();
 		private bool isDropdownOpen = false;
 
 		#endregion
@@ -59,6 +62,13 @@ namespace MultiSelectPackage.Components
 				{
 					ItemList = Items.ToList();      // Initialize ItemList with the provided items
 					FilteredItemList = ItemList;    // Initialize the filtered list with all items
+
+					// Check if SelectedItems is not null and has records
+					if (SelectedItems != null && SelectedItems.Any())
+					{
+						// If SelectedItems is not equal to the current SelectedValues, update SelectedValues so that the UI reflects the changes
+						SelectedValues = SelectedItems.ToList();
+					}
 				}
 			}
 
@@ -158,7 +168,7 @@ namespace MultiSelectPackage.Components
 				// Trigger the ValuesChanged callback
 				if (ValuesChanged.HasDelegate)
 				{
-					await ValuesChanged.InvokeAsync(SelectedValues.Cast<T>().ToList());
+					await ValuesChanged.InvokeAsync(SelectedValues);
 				}
 
 				// Re-render the component
@@ -227,7 +237,7 @@ namespace MultiSelectPackage.Components
 				{
 					SelectedValues.Remove(itemToRemove);
 					retval = true;
-					await ValuesChanged.InvokeAsync(SelectedValues.Cast<T>().ToList());
+					await ValuesChanged.InvokeAsync(SelectedValues);
 					await InvokeAsync(StateHasChanged);
 				}
 			}
