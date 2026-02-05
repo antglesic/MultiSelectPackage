@@ -60,8 +60,6 @@ a, .btn-link {
 		top: 0.5rem;
 	}
 
-****************Sidebar*****************
-
 .sidebar {
 	font-size: 14px;
 	height: 50px;
@@ -134,13 +132,9 @@ a, .btn-link {
 		margin-right: 15px;
 	}
 
-****************Main*****************
-
 .main {
 	margin: 8px;
 }
-
-*************Elements****************
 
 .btn {
 	min-width: 140px;
@@ -495,8 +489,6 @@ svg {
 	user-select: none;
 }
 
-**************Helpers***************
-
 .display-table {
 	display: table;
 }
@@ -538,8 +530,6 @@ svg {
 .float-right {
 	float: right;
 }
-
-**************Modal*****************
 
 .blazored-modal-container {
 	display: flex;
@@ -827,7 +817,6 @@ p.modal-error {
 	display: none;
 }
 
-************DROPDOWN****************
 .dropdown-small button {
 	padding: 0.25rem 0.5rem;
 	font-size: 0.8rem;
@@ -859,8 +848,6 @@ p.modal-error {
 			width: 50%;
 		}
 
-
-************DROPDOWN****************
 .dropdown-small button {
 	padding: 0.25rem 0.5rem;
 	font-size: 0.8rem;
@@ -951,8 +938,6 @@ p.modal-error {
 		max-width: fit-content;
 	}
 
-************TABLE****************
-
 .table tbody tr td {
 	font-size: 12px;
 	color: #6a6a6a !important;
@@ -997,7 +982,7 @@ p.modal-error {
 	display: flex;
 	font-size: 12px;
 	line-height: 16px;
-	color: rgba(#6A6A6A, 0.4);
+	color: rgba(106, 106, 106, 0.4);
 	margin-right: 8px;
 	align-items: center;
 }
@@ -1150,8 +1135,8 @@ p.modal-error {
 	}
 
 	.pagination li.disabled a {
-		pointer-events: default;
-		cursor: pointer;
+		pointer-events: none;
+		cursor: default;
 	}
 
 .pagination li.previous, .pagination li.next {
@@ -1234,8 +1219,6 @@ p.modal-error {
 	height: 30px;
 }
 
-************ small arrow btn ****************
-
 .btnArrow {
 	min-width: 40px;
 	height: 40px;
@@ -1283,8 +1266,6 @@ a.btnArrow {
 		background-color: #92A581;
 		border-color: #92A581;
 	}
-
-***************Custom****************
 
 .arrow-right:after {
 	content: "";
@@ -1478,29 +1459,25 @@ span.tool-lock-disabled {
 	background-color: #c7c7c7 !important;
 }
 
-************PLACEHOLDER COLOR****************
-::-webkit-input-placeholder {  WebKit, Blink, Edge 
-	color: rgba($text-color-light, .6) !important;
+/* Placeholder color for various browsers */
+::-webkit-input-placeholder { /* WebKit, Blink, Edge */
+	color: rgba(106, 106, 106, 0.6) !important;
 }
 
-:-moz-placeholder {  Mozilla Firefox 4 to 18 
-	color: rgba($text-color-light, .6) !important;
+:-moz-placeholder { /* Mozilla Firefox 4 to 18 */
+	color: rgba(106, 106, 106, 0.6) !important;
 }
 
-::-moz-placeholder {  Mozilla Firefox 19+ 
-	color: rgba($text-color-light, .6) !important;
+::-moz-placeholder { /* Mozilla Firefox 19+ */
+	color: rgba(106, 106, 106, 0.6) !important;
 }
 
-:-ms-input-placeholder {  Internet Explorer 10-11 
-	color: rgba($text-color-light, .6) !important;
+:-ms-input-placeholder { /* Microsoft Edge */
+	color: rgba(106, 106, 106, 0.6) !important;
 }
 
-::-ms-input-placeholder {  Microsoft Edge 
-	color: rgba($text-color-light, .6) !important;
-}
-
-::placeholder {  Most modern browsers support this now. 
-	color: rgba($text-color-light, .6) !important;
+::placeholder { /* Most modern browsers */
+	color: rgba(106, 106, 106, 0.6) !important;
 }
 
 input:-webkit-autofill,
@@ -1508,42 +1485,6 @@ input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
 	transition: background-color 5500s ease-in-out 0s;
-}
-
-************GEOPORTAL************************
-.map-bottom .map {
-	margin-top: 10px;
-}
-
-.map-side .filter .col-md-1 {
-	flex: 0 0 25% !important;
-	max-width: 25% !important;
-}
-
-.map-side .filter .col-md-2 {
-	flex: 0 0 33.333333% !important;
-	max-width: 33.333333% !important;
-}
-
-.map-side .parcel__grid.filter .col-md-1 {
-	flex: 0 0 33.333333% !important;
-	max-width: 33.333333% !important;
-}
-
-.map-side .parcel__grid .filter .col-md-2 {
-	flex: 0 0 45% !important;
-	max-width: 45% !important;
-}
-
-.map-side .parcel__grid .filter .col-md-3 {
-	flex: 0 0 50% !important;
-	max-width: 50% !important;
-}
-
-.map-bottom .filter .form-control-xs,
-.map-side .filter .form-control-xs {
-	height: 31px !important;
-	border-radius: 0.2rem !important;
 }
 
 td .dropdown {
