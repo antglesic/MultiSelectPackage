@@ -43,9 +43,9 @@ namespace MultiSelectPackage.Components
 
 		#region Properties
 
-		private List<T> ItemList = new List<T>();
-		private List<T> FilteredItemList = new List<T>();
-		private List<T> SelectedValues = new List<T>();
+		private List<T> ItemList = [];
+		private List<T> FilteredItemList = [];
+		private List<T> SelectedValues = [];
 		private bool isDropdownOpen = false;
 
 		#endregion
@@ -60,14 +60,14 @@ namespace MultiSelectPackage.Components
 				// Check if ItemList is empty or if the items have changed
 				if (ItemList.Count == 0 || !ItemsAreEqual(ItemList, Items))
 				{
-					ItemList = Items.ToList();      // Initialize ItemList with the provided items
+					ItemList = [.. Items];          // Initialize ItemList with the provided items
 					FilteredItemList = ItemList;    // Initialize the filtered list with all items
 
 					// Check if SelectedItems is not null and has records
 					if (SelectedItems != null && SelectedItems.Any())
 					{
 						// If SelectedItems is not equal to the current SelectedValues, update SelectedValues so that the UI reflects the changes
-						SelectedValues = SelectedItems.ToList();
+						SelectedValues = [.. SelectedItems];
 					}
 				}
 			}
@@ -78,11 +78,8 @@ namespace MultiSelectPackage.Components
 		// This method checks if the items in the list are equal based on the IdentifierProperty
 		private bool ItemsAreEqual(IEnumerable<T> list1, IEnumerable<T> list2)
 		{
-			var identifierProperty = typeof(T).GetProperty(IdentifierProperty);
-			if (identifierProperty == null)
-			{
-				throw new InvalidOperationException($"Property '{IdentifierProperty}' not found on type '{typeof(T).Name}'");
-			}
+			var identifierProperty = typeof(T).GetProperty(IdentifierProperty)
+				?? throw new InvalidOperationException($"Property '{IdentifierProperty}' not found on type '{typeof(T).Name}'");
 
 			var list1Identifiers = list1.Select(item => identifierProperty.GetValue(item)).ToList();
 			var list2Identifiers = list2.Select(item => identifierProperty.GetValue(item)).ToList();
@@ -91,13 +88,11 @@ namespace MultiSelectPackage.Components
 		}
 
 		// This method retrieves the value of a property from an item using reflection
-		private object? GetPropertyValue(T item, string propertyName)
+		private static object? GetPropertyValue(T item, string propertyName)
 		{
-			var propertyInfo = typeof(T).GetProperty(propertyName);
-			if (propertyInfo == null)
-			{
-				throw new InvalidOperationException($"Property '{propertyName}' not found on type '{typeof(T).Name}'");
-			}
+			var propertyInfo = typeof(T).GetProperty(propertyName)
+				?? throw new InvalidOperationException($"Property '{propertyName}' not found on type '{typeof(T).Name}'");
+
 			return propertyInfo.GetValue(item);
 		}
 
@@ -112,11 +107,11 @@ namespace MultiSelectPackage.Components
 			else
 			{
 				// Filter items based on DisplayProperty (search text matching any part of the display property)
-				FilteredItemList = ItemList.Where(item =>
+				FilteredItemList = [.. ItemList.Where(item =>
 				{
 					var displayValue = GetPropertyValue(item, DisplayProperty)?.ToString();
 					return displayValue != null && displayValue.Contains(filterText, StringComparison.CurrentCultureIgnoreCase);
-				}).ToList();
+				})];
 			}
 
 			await InvokeAsync(StateHasChanged);
@@ -128,12 +123,12 @@ namespace MultiSelectPackage.Components
 			bool isSelected = false;
 			var identifierValue = GetPropertyValue(item, IdentifierProperty);
 
-			if (SelectedValues != null && SelectedValues.Any())
+			if (SelectedValues is { Count: > 0 })
 			{
 				isSelected = SelectedValues.Any(selectedItem =>
 				{
 					var selectedIdentifierValue = GetPropertyValue((T)selectedItem, IdentifierProperty);
-					return selectedIdentifierValue != null && selectedIdentifierValue.Equals(identifierValue);
+					return selectedIdentifierValue is not null && selectedIdentifierValue.Equals(identifierValue);
 				});
 			}
 
@@ -145,7 +140,7 @@ namespace MultiSelectPackage.Components
 		{
 			try
 			{
-				if (item == null)
+				if (item is null)
 				{
 					throw new ArgumentNullException(nameof(item));
 				}
@@ -153,8 +148,11 @@ namespace MultiSelectPackage.Components
 				if (IsSelected(item))
 				{
 					// If the item is already selected, remove it
-					var selectedItem = SelectedValues.FirstOrDefault(selected => GetPropertyValue((T)selected, IdentifierProperty)?.Equals(GetPropertyValue(item, IdentifierProperty)) == true);
-					if (selectedItem != null)
+					var selectedItem = SelectedValues
+						.FirstOrDefault(selected =>
+							GetPropertyValue(selected, IdentifierProperty)?.Equals(GetPropertyValue(item, IdentifierProperty)) == true);
+
+					if (selectedItem is not null)
 					{
 						SelectedValues.Remove(selectedItem);
 					}
@@ -225,11 +223,11 @@ namespace MultiSelectPackage.Components
 		{
 			bool retval = false;
 
-			if (SelectedValues != null && SelectedValues.Any())
+			if (SelectedValues is { Count: > 0 })
 			{
 				var itemToRemove = SelectedValues.FirstOrDefault(item =>
 				{
-					var propertyValue = GetPropertyValue((T)item, IdentifierProperty);
+					var propertyValue = GetPropertyValue(item, IdentifierProperty);
 					return propertyValue != null && propertyValue.Equals(Identifier);
 				});
 
